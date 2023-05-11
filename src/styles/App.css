@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+
+*{
+  margin: 0 ;
+  padding: 0;
+  font-family: 'Yanone Kaffeesatz', sans-serif;
+  box-sizing: border-box;
+  font-family: 'Bebas Neue', cursive;
+}
+
+body{
+ padding: 12.5% 12.5% 2rem 12.5% ;
+ color: aliceblue;
+ overflow-x: hidden;
+ background-image: url(../assets/_3b37a5dd-be12-4638-ac70-86848ccffc1e.jpeg);
+ background-size: cover ;
+ background-repeat: no-repeat;
+}
+
+p,h1,h2,h3,small{
+  font-family: 'Bebas Neue', cursive;
+}
+
+img{
+  object-fit: contain;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.search {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.search__input {
+  flex-grow: 1;
+  height: 3rem;
+  padding: 0 2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 2rem;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.search__input:focus {
+  outline: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.4);
+}
+
+.search__button {
+  position: absolute;
+  right: 0.75rem;
+  height: 2rem;
+  width: 2rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #e66312;
+  color: #fff;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.search__button:hover {
+  background-color: #fff;
+  color: #de3434;
+  cursor: pointer;
+}
+
+
+.card {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.card__element {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  width: 200px;
+  color: #ffff;
+  height: 200px;
+  transition: all .5s;
+}
+
+.card__element:hover{
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.card__icon {
+  width: 70px;
+  background: #c14a05;
+  border-radius: 3rem;
+}
+
+.card__icon:hover{
+  box-shadow: 0px 0px 20px #945028;
+  border-radius: 3rem;
+}
+
+.card__element h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.card__element p {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.card::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+  height: 100%;
+  opacity: 0.5;
+  content: "";
+}
+
+.weather{
+  height: 300px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: initial;
+  align-items: center;
+  padding: 1rem;
+}
+
+.weather::after{
+    display:block;
+    position: absolute;
+    top: 0;
+    width:  100%;
+    background:  #c14a05;
+    z-index: -1;
+    height: 100%;
+    opacity: .5;
+    border-radius: 2rem;
+    content: "";
+}
+
+.weather__temp{
+  font-size: 60px;
+}
+
+.weather__icon{
+  min-width: 300px;
+  max-width: 400px;
+  position: absolute ;
+  padding-top: 1rem ;
+  top: 0;
+}
+
+.location{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+}
+
+.location__time{
+  display: flex;
+  gap: 2px;
+  align-items: end;
+}
+
+.time__text{
+  font-size: 70px;
+}
+
+.app{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+
+@media screen and (min-width: 1022px) {
+
+  .card__icon{
+    width: 100px;
+  }
+
+}

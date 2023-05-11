@@ -1,6 +1,8 @@
-import './App.css'
+import './styles/App.css'
+import './styles/Loader.css'
 import Loader from './components/Loader'
 import Card from './components/Card'
+
 
 function App() {
   return (

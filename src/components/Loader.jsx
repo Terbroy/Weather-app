@@ -1,14 +1,14 @@
 import React from 'react';
+import { DotLoader } from 'react-spinners';
 
 const Loader = () => {
-    return (
-        <div className="hide" id='loader'>
-        <div className='container-load' >
-            <div className='Loader'></div>
-            <h2 className='loader-name'>Loading...</h2>
-        </div>
-        </div>
-    );
+  return (
+    <div className="" id="loader">
+      <div className="container-load">
+        <DotLoader color="#fff" />
+      </div>
+    </div>
+  );
 };
 
 export default Loader;

@@ -1,43 +1,113 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const Card = () => {
-    const [weather, setWeather] = useState('')
-    const [kelvin, setKelvin] = useState ('')
-    useEffect(() => {
+    const [weather, setWeather ] = useState('');
+    const [value, setValue] = useState ("Ciudad");
+    const [citys, setCitys] = useState (["London", "Paris", "New York", "Bogota"]);
+    const [changeButton, setChangeButton] = useState (0);
+    const [time, setTime] = useState ("");
+    const [localTime, setLocalTime] = useState (new Date().toLocaleTimeString());
 
+    // const updateTime = () => {
+    //     setTime(new Date().toLocaleTimeString());
+    // }
+    //     setInterval(updateTime,1000);
+
+
+    const celsius = (kelvin) =>{
+        const temp = Math.floor(kelvin - 273.15); 
+        return `${temp}°C`;
+    }
+
+    useEffect(() => {
         navigator.geolocation.getCurrentPosition(success);
+        console.log(navigator.geolocation.getCurrentPosition);
 
         function success(pos) {
             const crd = pos.coords;
-            document.getElementById('loader').classList.add('none')
+            document.getElementById("loader").classList.add('hide')
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=ff824b7170f955795467adaaf92e00f0`)
                 .then(res => setWeather(res.data))
                 .catch(error => console.log(error));
         }
+
+        for (const city in citys) {
+            if(typeof city=== "string") {
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${citys[city]}&appid=ff824b7170f955795467adaaf92e00f0`)
+            .then(res => citys.splice(city, 1, res.data))
+            }{
+            console.log(typeof city)
+            }
+        }
+
     },[])
+    useEffect(()=>{
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=ff824b7170f955795467adaaf92e00f0`)
+        .then(res => setWeather(res.data))
+        .catch(error => setWeather(error));
+        if(changeButton!=0){
+            axios.get(`https://timezone.abstractapi.com/v1/current_time/?api_key=5a4930fe3fbf48288431a5c947e85670&location=${value}`)
+                .then(res => {
+                    setTime(res.data.datetime);
+                })
+                .catch(error => console.log(error));        
+        }
+    },[changeButton])
 
-    console.log(weather);
-
-
+    console.log(time, changeButton, weather);
 
     return (
-        <div className='card'>
-            <h1>Weather App</h1>
-            <h3>{weather.name}, {weather.sys?.country}</h3>
-            <div className="info">
-                <div className='temperature'>
-                    <img src={`http://openweathermap.org/img/wn/${weather.weather?.[0].icon}@2x.png`} alt="" />
-                    <h2>{kelvin ? weather.main?.temp : Math.floor(weather.main?.temp-273.15)} {kelvin ? ' K' : ' °C'}</h2>
-                </div>
-                <div>
-                    <h3>"{weather.weather?.[0].main}"</h3>
-                    <h3>Wind speed: <b>{weather.wind?.speed} m/s</b></h3>
-                    <h3>Clouds: <b>{weather.clouds?.all}%</b></h3>
-                    <h3>Pressure: <b>{weather.main?.pressure} mb</b></h3>
-                </div>
-            </div>
-            <button onClick={() => setKelvin(!kelvin)}>{kelvin ? 'Celsius' : 'Kelvin'}</button>
+        <div className='container'>
+           <form className='search' action="">
+                <input 
+                    className='search__input' 
+                    onChange={(e) => {
+                    setValue(e.target.value);   
+                    }} 
+                    type="text" 
+                    name="" 
+                    id="" 
+                    value={value}
+                    placeholder="Buscar..."
+                />
+                <button 
+                    className='search__button'
+                    onClick={(e) => {
+                    e.preventDefault();
+                    setChangeButton(changeButton + 1);
+                    }} 
+                    type='submit'
+                >
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button>
+           </form>
+
+            <section className='card'>
+            {
+                citys.map(city => {
+                    return (
+                    <div key={city.name} className='card__element'>
+                        <h3>{city.name}</h3>
+                        <img className='card__icon' src={`https://openweathermap.org/img/wn/${city.weather?.[0].icon}@2x.png`} alt="" />
+                        <p>{celsius(city.main?.temp)}</p>
+                    </div>)
+
+                })
+            }
+            </section>
+            <section className='weather'>
+            <h3 className='weather__temp'>{celsius(weather.main?.temp)}</h3>
+            <img className='weather__icon' src={`https://openweathermap.org/img/wn/${weather.weather?.[0].icon}@4x.png`} alt="" />
+            </section>
+            <section className='location'>
+            <h1>{weather.coord   ? weather.name : weather.response?.data?.message}</h1>
+            {/* <p className='time__text'>{`${time.slice(0,4)} ${time.slice(8)}` }</p> */}
+            <p className='time__text'>{changeButton === 0 ? `${localTime.slice(0,4)} ${localTime.slice(-2)}`: `${time.slice(11,16)} ${time.slice(5,10)}` }</p>
+            </section>
+            <p className='app'>Weather App</p>
         </div>
     );
 };
