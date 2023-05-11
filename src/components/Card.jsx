@@ -11,12 +11,6 @@ const Card = () => {
     const [time, setTime] = useState ("");
     const [localTime, setLocalTime] = useState (new Date().toLocaleTimeString());
 
-    // const updateTime = () => {
-    //     setTime(new Date().toLocaleTimeString());
-    // }
-    //     setInterval(updateTime,1000);
-
-
     const celsius = (kelvin) =>{
         const temp = Math.floor(kelvin - 273.15); 
         return `${temp}°C`;
@@ -24,11 +18,12 @@ const Card = () => {
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(success);
-        console.log(navigator.geolocation.getCurrentPosition);
 
         function success(pos) {
             const crd = pos.coords;
-            document.getElementById("loader").classList.add('hide')
+            setTimeout(() => {
+                document.getElementById("loader").classList.add('hide')
+            }, "2000");
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=ff824b7170f955795467adaaf92e00f0`)
                 .then(res => setWeather(res.data))
                 .catch(error => console.log(error));
@@ -51,7 +46,11 @@ const Card = () => {
             document.getElementById("loader").classList.remove('hide')
             setWeather(res.data);
         })
-        .finally(res => document.getElementById("loader").classList.add('hide'))
+        .finally(res => {
+            setTimeout(() => {
+                document.getElementById("loader").classList.add('hide')
+            }, "2000");
+        })
         .catch(error => setWeather(error));
         
         if(changeButton!=0){
