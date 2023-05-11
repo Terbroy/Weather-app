@@ -38,6 +38,7 @@ const Card = () => {
             if(typeof city=== "string") {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${citys[city]}&appid=ff824b7170f955795467adaaf92e00f0`)
             .then(res => citys.splice(city, 1, res.data))
+            .catch(error => console.log(error));
             }{
             console.log(typeof city)
             }
