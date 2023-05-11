@@ -46,8 +46,13 @@ const Card = () => {
     },[])
     useEffect(()=>{
         axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=ff824b7170f955795467adaaf92e00f0`)
-        .then(res => setWeather(res.data))
+        .then(res => {
+            document.getElementById("loader").classList.remove('hide')
+            setWeather(res.data);
+        })
+        .finally(res => document.getElementById("loader").classList.add('hide'))
         .catch(error => setWeather(error));
+        
         if(changeButton!=0){
             axios.get(`https://timezone.abstractapi.com/v1/current_time/?api_key=5a4930fe3fbf48288431a5c947e85670&location=${value}`)
                 .then(res => {
@@ -56,8 +61,6 @@ const Card = () => {
                 .catch(error => console.log(error));        
         }
     },[changeButton])
-
-    console.log(time, changeButton, weather);
 
     return (
         <div className='container'>
