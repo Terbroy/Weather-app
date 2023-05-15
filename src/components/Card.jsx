@@ -16,6 +16,7 @@ const Card = () => {
         return `${temp}°C`;
     }
 
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(success);
 
@@ -106,7 +107,7 @@ const Card = () => {
             <section className='location'>
             <h1>{weather.coord   ? weather.name : weather.response?.data?.message}</h1>
             {/* <p className='time__text'>{`${time.slice(0,4)} ${time.slice(8)}` }</p> */}
-            <p className='time__text'>{changeButton === 0 ? `${localTime.slice(0,4)} ${localTime.slice(-2)}`: `${time}`}</p>
+            <p className='time__text'>{changeButton > 0  ? `${time.slice(11,16)} ${time.slice(5,10)}`: localTime.includes("M") ? `${localTime.slice(0,4)} ${localTime.slice(-2)}` : `${localTime}` }</p>
             </section>
             <p className='app'>Weather App</p>
         </div>
