@@ -45,12 +45,12 @@ const Card = () => {
             document.getElementById("loader").classList.remove('hide')
             setWeather(res.data);
         })
+        .catch(error => setWeather(error))
         .finally(res => {
             setTimeout(() => {
                 document.getElementById("loader").classList.add('hide')
             }, "2000");
-        })
-        .catch(error => setWeather(error));
+        });
         
         if(changeButton!=0){
             axios.get(`https://timezone.abstractapi.com/v1/current_time/?api_key=5a4930fe3fbf48288431a5c947e85670&location=${value}`)
@@ -107,7 +107,7 @@ const Card = () => {
             <section className='location'>
             <h1>{weather.coord   ? weather.name : weather.response?.data?.message}</h1>
             {/* <p className='time__text'>{`${time.slice(0,4)} ${time.slice(8)}` }</p> */}
-            <p className='time__text'>{changeButton > 0  ? `${time.slice(11,16)} ${time.slice(5,10)}`: localTime.includes("M") ? `${localTime.slice(0,4)} ${localTime.slice(-2)}` : `${localTime}` }</p>
+            <p className='time__text'>{changeButton > 0  ? `${time.slice(11,16)} ${time.slice(5,10)}`: localTime.includes("M") ? `${localTime.slice(0,4)} ${localTime.slice(-2)}` : `${localTime.slice(0,5)}` }</p>
             </section>
             <p className='app'>Weather App</p>
         </div>
