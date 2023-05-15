@@ -21,9 +21,7 @@ const Card = () => {
 
         function success(pos) {
             const crd = pos.coords;
-            setTimeout(() => {
-                document.getElementById("loader").classList.add('hide')
-            }, "2000");
+            document.getElementById("loader").classList.add('hide')
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${crd.latitude}&lon=${crd.longitude}&appid=ff824b7170f955795467adaaf92e00f0`)
                 .then(res => setWeather(res.data))
                 .catch(error => console.log(error));
@@ -108,7 +106,7 @@ const Card = () => {
             <section className='location'>
             <h1>{weather.coord   ? weather.name : weather.response?.data?.message}</h1>
             {/* <p className='time__text'>{`${time.slice(0,4)} ${time.slice(8)}` }</p> */}
-            <p className='time__text'>{changeButton === 0 ? `${localTime.slice(0,4)} ${localTime.slice(-2)}`: `${time.slice(11,16)} ${time.slice(5,10)}` }</p>
+            <p className='time__text'>{changeButton === 0 ? `${localTime.slice(0,4)} ${localTime.slice(-2)}`: time.includes("M") ? `${time.slice(11,16)} ${time.slice(5,10)}` : `${time.slice(0,4)} ${time.slice(-2)}`}</p>
             </section>
             <p className='app'>Weather App</p>
         </div>
